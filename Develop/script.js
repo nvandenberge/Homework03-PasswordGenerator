@@ -29,7 +29,7 @@ function arrayFromLowToHigh(low, high) {
   return array;
 }
 
-// Prompts to get password length and options when user clicks 'Generate Password'
+// Prompts to get password length and options when user clicks 'Generate Password' and validation
 function getPasswordOptions() {
   const passwordLength = prompt(
     "How many characters would you like your password to be?"
@@ -64,12 +64,64 @@ function getPasswordOptions() {
     getPasswordOptions();
     return;
   }
+
+  generatePassword(
+    passwordLength,
+    includeLowercase,
+    includeUppercase,
+    includeNumbers,
+    includeSpecial
+  );
+}
+
+// Function to get random index from array
+function getRandom(array) {
+  let randomIndex = Math.floor(Math.random() * array.length);
+  let randomElement = array[randomIndex];
+  return randomElement;
+}
+
+// Function will evaluate the selected options and add random character codes to password array
+function generatePassword(
+  passwordLength,
+  includeLowercase,
+  includeUppercase,
+  includeNumbers,
+  includeSpecial
+) {
+  // Array that we can add user selected character sets to and use to fill in rest of password
+  let potentialCharacters = [];
+
+  // Array that we will push random characters to and then .join('') to get final password string output
+  let password = [];
+
+  if (includeLowercase) {
+    potentialCharacters = potentialCharacters.concat(lowercase_char_codes);
+    password.push(
+      String.fromCharCode(getRandom(lowercase_char_codes))
+    );
+  }
+  if (includeUppercase) {
+    potentialCharacters = potentialCharacters.concat(uppercase_char_codes);
+    password.push(
+      String.fromCharCode(getRandom(uppercase_char_codes))
+    );
+  }
+  if (includeNumbers) {
+    potentialCharacters = potentialCharacters.concat(number_char_codes);
+    password.push(String.fromCharCode(getRandom(number_char_codes)));
+  }
+  if (includeSpecial) {
+    potentialCharacters = potentialCharacters.concat(special_char_codes);
+    password.push(
+      String.fromCharCode(getRandom(special_char_codes))
+    );
+  }
+
 }
 
 // Write password to the #password input
-function writePassword(passwordResult) {
-  const password = generatePassword();
+function writePassword(password) {
   const passwordText = document.querySelector("#password");
-
-  passwordText.value = passwordResult;
+  passwordText.value = password;
 }
