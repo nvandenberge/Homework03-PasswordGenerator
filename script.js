@@ -65,6 +65,7 @@ function getPasswordOptions() {
     return;
   }
 
+// Passing all input prompt values to generatePassword function
   generatePassword(
     passwordLength,
     includeLowercase,
@@ -81,7 +82,7 @@ function getRandom(array) {
   return randomElement;
 }
 
-// Function will evaluate the selected options and add random character codes to password array
+// Function will evaluate the selected options and add random character codes to generatedPassword array
 function generatePassword(
   passwordLength,
   includeLowercase,
@@ -89,35 +90,51 @@ function generatePassword(
   includeNumbers,
   includeSpecial
 ) {
+
   // Array that we can add user selected character sets to and use to fill in rest of password
   let potentialCharacters = [];
 
   // Array that we will push random characters to and then .join('') to get final password string output
-  let password = [];
+  let generatedPassword = [];
 
+  // If true, select a random character code and push to generatedPassword array, also add all character codes to potentialCharacters array
   if (includeLowercase) {
     potentialCharacters = potentialCharacters.concat(lowercase_char_codes);
-    password.push(
+    generatedPassword.push(
       String.fromCharCode(getRandom(lowercase_char_codes))
     );
   }
   if (includeUppercase) {
     potentialCharacters = potentialCharacters.concat(uppercase_char_codes);
-    password.push(
+    generatedPassword.push(
       String.fromCharCode(getRandom(uppercase_char_codes))
     );
   }
   if (includeNumbers) {
     potentialCharacters = potentialCharacters.concat(number_char_codes);
-    password.push(String.fromCharCode(getRandom(number_char_codes)));
+    generatedPassword.push(
+      String.fromCharCode(getRandom(number_char_codes)));
   }
   if (includeSpecial) {
     potentialCharacters = potentialCharacters.concat(special_char_codes);
-    password.push(
+    generatedPassword.push(
       String.fromCharCode(getRandom(special_char_codes))
     );
   }
 
+  // Variable that calulates how many random characters need to be added once confirmed characters have been added 
+  let restOfPassword = passwordLength - generatedPassword.length;
+
+// For loop to fill in the rest of the password characters after confirmed characters
+  for (let i = 0; i < restOfPassword; i++) {
+    generatedPassword.push(
+      String.fromCharCode(getRandom(potentialCharacters))
+    );
+  }
+
+  // Combine each element in array to single string
+  let finalPassword = generatedPassword.join('')
+  writePassword(finalPassword)
 }
 
 // Write password to the #password input
