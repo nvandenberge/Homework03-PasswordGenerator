@@ -20,7 +20,7 @@ const special_char_codes = arrayFromLowToHigh(33, 47)
 generateBtn.addEventListener("click", getPasswordOptions);
 
 // Function that takes in a low and high number and creates an array that includes all numbers between them
-// This elimninates the need to create an array with each inidividual character ex: ['a', 'b', 'c']
+// This eliminates the need to create an array with each individual character ex: ['a', 'b', 'c']
 function arrayFromLowToHigh(low, high) {
   const array = [];
   for (let i = low; i <= high; i++) {
@@ -29,7 +29,7 @@ function arrayFromLowToHigh(low, high) {
   return array;
 }
 
-// Prompts to get password length and options when user clicks 'Generate Password' and validation
+// Function that prompts and retrieves password length and options when user clicks 'Generate Password'
 function getPasswordOptions() {
   const passwordLength = prompt(
     "How many characters would you like your password to be?"
